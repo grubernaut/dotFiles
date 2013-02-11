@@ -1,0 +1,9 @@
+Included are all of my "dot" files that I use for configuration of my
+machines. 
+Feel free to branch and update as needed. 
+
+**
+In order to use files, place inside the users home directory and place a "."
+<without quotes> before each file and/or directory. 
+** 
+

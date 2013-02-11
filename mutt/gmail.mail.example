@@ -1,0 +1,10 @@
+color status green default
+
+set from = "<USER>@gmail.com"
+set hostname = "gmail.com"
+set imap_user = "<USER>@gmail.com"
+set folder="imaps://imap.gmail.com:993"
+set spoolfile ="+INBOX"
+set record ="+SENT"
+set signature = "/path/to/signature/file"
+set smtp_url="smtp://<USER>@gmail.com@smtp.gmail.com:587/"
