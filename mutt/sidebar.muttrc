@@ -1,0 +1,23 @@
+# shamelessly copied from
+# http://www.lunar-linux.org/index.php?option=com_content&task=view&id=44
+
+# set up the sidebar, default visible
+set sidebar_width		= 30
+set sidebar_visible		= yes
+set sidebar_delim = '  |'
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+
+# color of folders with new mail
+#color sidebar black black
+#color sidebar_new cyan black
+
+# I don't need these. just for documentation purposes. See below.
+# sidebar-scroll-up
+# sidebar-scroll-down
+
+#
+# toggle toolbar visibility, use 'b'
+macro index \Cb '<enter-command>toggle sidebar_visible<enter><refresh>'
+macro pager \Cb '<enter-command>toggle sidebar_visible<enter><redraw-screen>'
