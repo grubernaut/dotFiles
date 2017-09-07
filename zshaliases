@@ -5,6 +5,14 @@
 # Emacs
 alias emc='emacsclient -a "" -t'
 
+# Terraform
+alias tfa='terraform apply'
+alias tfp='terraform plan'
+alias tf='terraform'
+
+# PBcopy
+alias pbcopy='xclip -selection clipboard'
+
 # Git
 alias g='git'
 

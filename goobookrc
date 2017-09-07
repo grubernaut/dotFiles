@@ -1,3 +1,0 @@
-[DEFAULT]
-email: jake@hashicorp.com
-passwordeval: security find-internet-password -g -a jake@hashicorp.com 2>&1| perl -e 'if (<STDIN> =~ m/password: "(.*)"$/ ) { print $1; }'
