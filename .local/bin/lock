@@ -1,0 +1,6 @@
+#!/usr/local/bin/bash
+
+maim /tmp/lock.png
+convert /tmp/lock.png -blur 10x90 /tmp/lock.png
+i3lock -n -i /tmp/lock.png
+rm /tmp/lock.png

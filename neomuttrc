@@ -1,0 +1,172 @@
+# https://www.neomutt.org/guide/reference search sleep_time for additional info
+
+set user_agent=no
+my_hdr User-Agent: Mutt/20180203-neo (OpenBSD/amd64)
+
+set sleep_time=0 # be faster
+set timeout=3
+set mail_check=0
+set beep=no # no beep sound
+set editor="emacsclient -a \"\" -t"
+set edit_headers=yes
+auto_view text/html
+alternative_order text/plain text/html
+#set sort=reverse-threads
+#set sort_aux=last-date-received
+#set sort_re
+set collapse_all
+# Index page format. Default "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
+set index_format="%4C %Z %{%b %d %R} %-15.15L (%?l?%4l&%4c?) %s"
+set sidebar_visible=yes
+set sidebar_format="%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats=yes
+set sidebar_width=30
+color sidebar_new yellow default
+set sidebar_short_path=yes
+set sidebar_delim_chars="/"
+set sidebar_folder_indent=yes
+set sidebar_indent_string=" "
+set mark_old=no
+set include=yes
+set mime_forward="yes"
+set mime_forward_rest="yes"
+set delete
+
+# Pager View Options ---------------------------------
+set pager_index_lines = 10 # number of index lines to show
+set pager_context = 3      # number of context lines to show
+set pager_stop             # don't go to next message automatically
+set menu_scroll            # scroll in menus
+set tilde                  # show tildes like in vim
+unset markers              # no ugly plus signs
+
+# Status Bar -----------------------------------------
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+ignore *
+unignore from date subject to cc
+unignore x-mailer
+unignore x-spam-status
+unignore x-spam-report
+
+# attachments
+bind attach <enter> view-mailcap
+
+# Vim like binds
+bind attach \CN next-page
+bind attach \CP previous-page
+bind pager \CN next-line
+bind pager \CP previous-line
+bind index \CN next-entry
+bind index \CP previous-entry
+bind index \Cd delete-message
+macro index d "<clear-flag>N"
+bind pager g top
+bind pager G bottom
+bind attach,index g first-entry
+bind attach,index G last-entry
+
+# reply-all
+bind index R noop
+bind index,pager R group-reply
+
+# Sidebar binds
+bind index,pager k sidebar-prev                 # Ctrl-n to select next folder
+bind index,pager j sidebar-next                 # Ctrl-p to select previous folder
+bind index,pager o sidebar-open                 # Ctrl-o to open selected folder
+bind index,pager \CB sidebar-toggle-visible       # Ctrl-b to toggle visibility of the sidebar
+
+# Sync Mail
+macro index <f5> "<enter-command>unset wait_key<enter><shell-escape>offlineimap -u syslog<enter><enter-command>set wait_key<enter>"
+
+# Mark folder as read
+#macro index <f6> "T ~O | ~N\n;N"
+macro index <f6> "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>"
+#macro index <f7> "T ~O | ~*\n;*"
+
+# Set accounts
+set mailcap_path="~/.mutt/mailcap"
+unset record
+set postponed="~/Mail/Drafts"
+unset imap_passive
+set use_from
+set sendmail="/usr/local/bin/send.py --readfrommsg"
+set mbox_type=Maildir
+mailboxes "=-------- Personal --------" \
+=jkchamp/INBOX \
+=jkchamp/fbsd-hackers \
+=jkchamp/fbsd-current \
+=jkchamp/src-head \
+=jkchamp/openbsd-announce \
+=jkchamp/openbsd-bugs \
+=jkchamp/openbsd-misc \
+=jkchamp/openbsd-tech \
+=jkchamp/openbsd-ports \
+=jkchamp/openbsd-advocacy \
+
+## Personal
+source "~/.mutt/personal"
+folder-hook $folder 'source ~/.mutt/personal'
+
+## Work
+source "~/.mutt/work"
+folder-hook $folder 'source ~/.mutt/work'
+
+macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.mutt/work<enter><change-folder>!<enter>'
+macro index,pager <f3> '<sync-mailbox><enter-command>source ~/.mutt/personal<enter><change-folder>!<enter>'
+
+# COLORS
+# general-doesn't-fit stuff
+color normal     color188 color237
+color error      color115 color236
+color markers    color142 color238
+color tilde      color108 color237
+color status     color144 color234
+
+# index stuff
+color indicator  color108 color236
+color tree       color109 color237
+color index      color188 color237 ~A
+color index      color188 color237 ~N
+color index      color188 color237 ~O
+color index      color174 color237 ~F
+color index      color174 color237 ~D
+
+# header stuff
+color hdrdefault color223 color237
+color header     color223 color237 "^Subject"
+
+# gpg stuff
+color body       color188 color237 "^gpg: Good signature.*"
+color body       color115 color236 "^gpg: BAD signature.*"
+color body       color174 color237 "^gpg: Can't check signature.*"
+color body       color174 color237 "^-----BEGIN PGP SIGNED MESSAGE-----"
+color body       color174 color237 "^-----BEGIN PGP SIGNATURE-----"
+color body       color174 color237 "^-----END PGP SIGNED MESSAGE-----"
+color body       color174 color237 "^-----END PGP SIGNATURE-----"
+color body       color174 color237 "^Version: GnuPG.*"
+color body       color174 color237 "^Comment: .*"
+
+# url, email and web stuff
+color body       color174 color237 "(finger|ftp|http|https|news|telnet)://[^ >]*"
+color body       color174 color237 "<URL:[^ ]*>"
+color body       color174 color237 "www\\.[-.a-z0-9]+\\.[a-z][a-z][a-z]?([-_./~a-z0-9]+)?"
+color body       color174 color237 "mailto: *[^ ]+\(\\i?subject=[^ ]+\)?"
+color body       color174 color237 "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+
+# misc body stuff
+color attachment color174 color237 #Add-ons to the message
+color signature  color223 color237
+
+# quote levels
+color quoted     color108 color237
+color quoted1    color116 color237
+color quoted2    color247 color237
+color quoted3    color108 color237
+color quoted4    color116 color237
+color quoted5    color247 color237
+color quoted6    color108 color237
+color quoted7    color116 color237
+color quoted8    color247 color237
+color quoted9    color108 color237

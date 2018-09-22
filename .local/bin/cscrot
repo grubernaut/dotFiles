@@ -1,0 +1,5 @@
+#!/usr/local/bin/bash
+
+maim -s /tmp/foo.png
+xclip -selection clipboard -t image/png -i /tmp/foo.png
+rm /tmp/foo.png
