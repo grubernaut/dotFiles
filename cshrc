@@ -88,6 +88,7 @@ alias dmalloc 'eval `\dmalloc -C \!*`'
 #
 # The alias 'find.tcsh-sourced' is useful for identifying potential scripts
 # that will be automatically sourced.
+alias precmd 'if (-o ~/.git.tcsh) source ~/.git.tcsh'
 alias cwdcmd 'if (-o .enter.tcsh && -P22: .enter.tcsh == "0") source .enter.tcsh'
 alias popd 'if ("\!*" == "" && -o .exit.tcsh && -P22: .exit.tcsh == "0") source .exit.tcsh; ""popd \!*; printf "\033]0;${USER}@${HOST}:${PWD}\007"'
 alias cd 'if (-o .exit.tcsh && -P22: .exit.tcsh == "0") source .exit.tcsh; chdir \!*; printf "\033]0;${USER}@${HOST}:${PWD}\007"'
@@ -134,7 +135,7 @@ endif
 set nobeep
 set printexitvalue
 set promptchars = '%#'
-set prompt = "[%T]:%B%n%b@%m:%c2> "
+set prompt = "[%T]:%B%n%b:%c2:λ "
 # When horizontal space is a premium, not vertical space:
 # set prompt='%B%n%b@%U%m%u %S%/%s\
 # %# '
@@ -154,13 +155,15 @@ Filesystem Output Events                : %O\
 Times the process was swapped           : %W\
 Times of major page faults              : %F\
 Times of minor page faults              : %R")
-set watch=(0 any any)
-set who="%n has %a %l from %M."
+#set watch=(0 any any)
+#set who="%n has %a %l from %M."
 
 if ( $?tcsh ) then
 	bindkey "^W" backward-delete-word
 	bindkey -k up history-search-backward
+  bindkey "^p" history-search-backward
 	bindkey -k down history-search-forward
+  bindkey "^n" history-search-forward
 endif
 
 # I program using emacs and edit checkins or system files with vi(1). As
@@ -221,16 +224,7 @@ foreach lsext (${lsexts})
     set base_colors = "${base_colors}:*.${lsext}=${lscolor}"
 end
 
-# tcsh(1)'s colors
-switch ( $OSTYPE )
-case "linux*":
-    # CentOS 5.5's tcsh rpm is so old, it doesn't support current
-    # LS_COLORS. What a waste.
-    breaksw
-default:
-    setenv LS_COLORS "${base_colors}"
-    breaksw
-endsw
+setenv LS_COLORS "${base_colors}"
 
 # ls(1)'s colors
 setenv LSCOLORS 'exfxcxdxbxegedabagacad'
@@ -239,8 +233,6 @@ unset lsexts
 unset lscolor
 set color = (ls-F)
 alias ls "ls-F"
-
-
 
 # Begin the auto-complete section for commands
 set noglob
@@ -373,10 +365,8 @@ unset noglob
 # Use a "site-wide" .tcsh.site file for per-company settings and a per-host
 # .tcsh.local for per-host settings. .cshrc is largely immutable because I
 # update it periodically via:
-#
-# fetch -o ~/.cshrc https://raw.github.com/sean-/cshrc/master/.cshrc
-if (-o .site.tcsh && -P22: .site.tcsh == "0") source .site.tcsh
-if (-o .local.tcsh && -P22: .local.tcsh == "0") source .local.tcsh
+if (-o .site.tcsh) source .site.tcsh
+if (-o .local.tcsh) source .local.tcsh
 
-end:
-    onintr
+#end:
+    #onintr
