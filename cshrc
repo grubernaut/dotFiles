@@ -224,7 +224,14 @@ foreach lsext (${lsexts})
     set base_colors = "${base_colors}:*.${lsext}=${lscolor}"
 end
 
-setenv LS_COLORS "${base_colors}"
+switch ( $OSTYPE )
+case "linux*":
+  # rip
+  breaksw
+default:
+  setenv LS_COLORS "${base_colors}"
+  breaksw
+endsw
 
 # ls(1)'s colors
 setenv LSCOLORS 'exfxcxdxbxegedabagacad'
