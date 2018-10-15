@@ -13,7 +13,7 @@ setenv GOPATH $HOME/go
 
 ### Set various path bits
 if ( ! $?newpath ) set newpath
-foreach d (/bin /usr/bin /sbin /usr/sbin /usr/X11R6 /usr/local/bin /usr/local/sbin /usr/games $GOPATH/bin /usr/local/go/bin $path)
+foreach d (/bin /usr/bin /sbin /usr/sbin /usr/local/bin /usr/local/sbin /usr/games $GOPATH/bin /usr/local/go/bin $path)
 	if ( -d $d ) then
 		set -f newpath = ( $newpath $d )
 	endif
@@ -372,8 +372,8 @@ unset noglob
 # Use a "site-wide" .tcsh.site file for per-company settings and a per-host
 # .tcsh.local for per-host settings. .cshrc is largely immutable because I
 # update it periodically via:
-if (-o ~/.site.tcsh) source .site.tcsh
-if (-o ~/.local.tcsh) source .local.tcsh
+if (-o ~/.site.tcsh) source ~/.site.tcsh
+if (-o ~/.local.tcsh) source ~/.local.tcsh
 
-#end:
-    #onintr
+end:
+    onintr

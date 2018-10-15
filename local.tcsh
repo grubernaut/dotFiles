@@ -39,3 +39,5 @@ alias gsp git stash pop
 
 # Working Copy (w)
 alias gws git status  --short
+
+alias gwd git diff --no-ext-diff

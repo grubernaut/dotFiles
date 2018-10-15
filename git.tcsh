@@ -3,7 +3,11 @@ if ( "$gitBranch" != "" ) then
   set red   = "%{\033[1;31m%}"
   set green = "%{\033[0;32m%}"
   set white = "%{\033[0;37m%}"
-  set gitStatus = `sh -c "git status -s"`
+  set gitStatus = `sh -c "git status -s 2>/dev/null"`
+  if ( $? != 0 ) then
+	  #set gitBranch = ""
+	  exit
+  endif
   if ( "$gitStatus" != "" ) then
     set gitBranch = "{${red}${gitBranch}${white}}"
   else
