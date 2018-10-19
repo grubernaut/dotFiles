@@ -9,13 +9,13 @@ if ( "$gitBranch" != "" ) then
 	  exit
   endif
   if ( "$gitStatus" != "" ) then
-    set gitBranch = "{${red}${gitBranch}${white}}"
+    set gitBranch = "${red}{${gitBranch}}${white}"
   else
-    set gitBranch = "{${green}${gitBranch}${white}}"
+    set gitBranch = "${green}{${gitBranch}}${white}"
   endif
   unset red green white gitStatus
 endif
 
 endif
 
-set prompt = "[%T]:%B%n%b:%c2:${gitBranch}λ "
+set prompt = "[%T]:%B%n%b:%c2:${gitBranch}:λ "
